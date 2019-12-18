@@ -8,9 +8,35 @@ document.addEventListener('DOMContentLoaded', () => {
           blockChoice = document.querySelector('#block-choice'),
           btnExit = document.querySelector('#btn-exit'),
           formCustomer = document.querySelector('#form-customer'),
-          ordersTable = document.querySelector('#orders');
+          ordersTable = document.querySelector('#orders'),
+          modalOrder = document.querySelector('#order_read'),
+          modalOrderActive = document.querySelector('#order_active');
 
     const orders = [];
+
+
+    const openModal = (order) => {
+        const modal = order.active ? modalOrderActive : modalOrder;
+        const titleBlock = document.querySelector('.modal-title'),
+              firstNameBlock = document.querySelector('.firstName'),
+              emailBlock = document.querySelector('.email'),
+              descriptionBlock = document.querySelector('.description'),
+              currencyBlock = document.querySelector('.currency_img'),
+              countBlock = document.querySelector('.count'),
+              phoneBlock = document.querySelector('.phone'),
+              deadlineBlock = document.querySelector('.deadline');
+
+        titleBlock.textContent = order.title;
+        firstNameBlock.textContent = order.firstName;
+        emailBlock.textContent = order.email;
+        descriptionBlock.textContent = order.description;
+        currencyBlock.textContent = order.currency;
+        countBlock.textContent = order.amount;
+        phoneBlock.textContent = order.phone;
+        deadlineBlock.textContent = order.deadline;
+
+        modal.style.display = 'block';
+    };
 
     const renderOrders = () => {
 
@@ -26,6 +52,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>`;
         });
     };
+
+
+    ordersTable.addEventListener('click', (e) => {
+        const target = e.target;
+        const targetOrder = target.closest('.order');
+        const order = orders[targetOrder.dataset.numberOrder];
+        console.log(order);
+
+        if (targetOrder) {
+            openModal(order);
+        }
+
+    });
 
 
     customer.addEventListener('click', () => {
