@@ -36,6 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
         deadlineBlock.textContent = order.deadline;
 
         modal.style.display = 'block';
+
+        const closeBtn = modal.querySelector('.close');
+
+        closeBtn.addEventListener('click', (e) => {
+            modal.style.display = 'none';
+        });
     };
 
     const renderOrders = () => {
