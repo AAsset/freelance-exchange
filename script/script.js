@@ -60,6 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = 'none';
             renderOrders();
         }) : '';
+
+        const readyBtn = modal.querySelector('#ready');
+        readyBtn ? readyBtn.addEventListener('click', () => {
+
+            orders.splice(orders.indexOf(order), 1);
+
+            modal.style.display = 'none';
+            renderOrders();
+        }) : '';
     };
 
     const renderOrders = () => {
