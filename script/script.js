@@ -80,6 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.addEventListener('click', handlerModal);
     };
 
+    const calcDeadline = (deadline) => {
+        const oneDay = 24 * 60 * 60 * 1000;
+        const deadlineDate = new Date(deadline);
+        const currentDate = new Date();
+        return Math.round((deadlineDate - currentDate) / oneDay);
+    };
+
     const renderOrders = () => {
 
         ordersTable.textContent = '';
@@ -91,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${i + 1}</td>
                     <td>${order.title}</td>
                     <td class="${order.currency}"></td>
-                    <td>${order.deadline}</td>
+                    <td>${calcDeadline(order.deadline)}</td>
                 </tr>`;
         });
     };
