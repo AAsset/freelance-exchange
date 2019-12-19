@@ -29,10 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
         titleBlock.textContent = order.title;
         firstNameBlock.textContent = order.firstName;
         emailBlock.textContent = order.email;
+        emailBlock.href = 'mailto:' + order.email;
         descriptionBlock.textContent = order.description;
         currencyBlock.classList.add(order.currency);
         countBlock.textContent = order.amount;
-        phoneBlock.textContent = order.phone;
+        phoneBlock.href = 'tel:' + order.phone;
         deadlineBlock.textContent = order.deadline;
 
         modal.style.display = 'block';
@@ -64,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = e.target;
         const targetOrder = target.closest('.order');
         const order = orders[targetOrder.dataset.numberOrder];
-        console.log(order);
 
         if (targetOrder) {
             openModal(order);
