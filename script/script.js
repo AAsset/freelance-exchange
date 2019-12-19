@@ -12,13 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
           modalOrder = document.querySelector('#order_read'),
           modalOrderActive = document.querySelector('#order_active');
 
-    const orders = [];
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
 
+    const toStorage = () => {
+        localStorage.setItem('orders', JSON.stringify(orders));
+    };
 
     const handlerModal = (event) => {
         const target = event.target;
         const modal = target.closest('.order-modal');
         const order = orders[modal.id];
+
+        const baseActions = () => {
+            modal.style.display = 'none';
+            toStorage();
+            renderOrders();
+        };
 
         if (target.closest('.close') || target === modal) {
             modal.style.display = 'none';
@@ -26,21 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (target.classList.contains('get-order')) {
             order.active = true;
-            modal.style.display = 'none';
-            renderOrders();
+            baseActions();
         }
 
         if (target.id === 'capitulation') {
             order.active = false;
-            modal.style.display = 'none';
-            renderOrders();
+            baseActions();
         }
 
         if (target.id === 'ready') {
             orders.splice(orders.indexOf(order), 1);
-
-            modal.style.display = 'none';
-            renderOrders();
+            baseActions();
         }
     };
 
@@ -103,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-
     customer.addEventListener('click', () => {
         blockChoice.style.display = 'none';
         blockCustomer.style.display = 'block';
@@ -138,5 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         orders.push(obj);
 
         formCustomer.reset();
+        toStorage();
     });
 })
