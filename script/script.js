@@ -16,33 +16,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const openModal = (order) => {
-        const modal = order.active ? modalOrderActive : modalOrder;
-        const titleBlock = document.querySelector('.modal-title'),
-              firstNameBlock = document.querySelector('.firstName'),
-              emailBlock = document.querySelector('.email'),
-              descriptionBlock = document.querySelector('.description'),
-              currencyBlock = document.querySelector('.currency_img'),
-              countBlock = document.querySelector('.count'),
-              phoneBlock = document.querySelector('.phone'),
-              deadlineBlock = document.querySelector('.deadline');
+        const { title, firstName, email, phone, description, amount,
+                currency, deadline, active = false } = order;
+        const modal = active ? modalOrderActive : modalOrder;
 
-        titleBlock.textContent = order.title;
-        firstNameBlock.textContent = order.firstName;
-        emailBlock.textContent = order.email;
-        emailBlock.href = 'mailto:' + order.email;
-        descriptionBlock.textContent = order.description;
-        currencyBlock.classList.add(order.currency);
-        countBlock.textContent = order.amount;
-        phoneBlock.href = 'tel:' + order.phone;
-        deadlineBlock.textContent = order.deadline;
+        const titleBlock = modal.querySelector('.modal-title'),
+              firstNameBlock = modal.querySelector('.firstName'),
+              emailBlock = modal.querySelector('.email'),
+              descriptionBlock = modal.querySelector('.description'),
+              currencyBlock = modal.querySelector('.currency_img'),
+              countBlock = modal.querySelector('.count'),
+              phoneBlock = modal.querySelector('.phone'),
+              deadlineBlock = modal.querySelector('.deadline');
 
-        modal.style.display = 'block';
+        titleBlock.textContent = title;
+        firstNameBlock.textContent = firstName;
+        emailBlock.textContent = email;
+        emailBlock.href = 'mailto:' + email;
+        descriptionBlock.textContent = description;
+        currencyBlock.className = 'currency_img';
+        currencyBlock.classList.add(currency);
+        countBlock.textContent = amount;
+        deadlineBlock.textContent = deadline;
+        if (phoneBlock) phoneBlock.href = 'tel:' + phone;
+
+        modal.style.display = 'flex';
 
         const closeBtn = modal.querySelector('.close');
-
-        closeBtn.addEventListener('click', (e) => {
+        closeBtn ? closeBtn.addEventListener('click', (e) => {
             modal.style.display = 'none';
-        });
+        }) : '';
     };
 
     const renderOrders = () => {
@@ -51,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         orders.forEach((order, i) => {
             ordersTable.innerHTML += `
-                <tr class="order" data-number-order="${i}">
+                <tr class="order ${ order.active ? 'taken' : '' }"
+                    data-number-order="${i}">
                     <td>${i + 1}</td>
                     <td>${order.title}</td>
                     <td class="${order.currency}"></td>
