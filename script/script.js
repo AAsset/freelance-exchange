@@ -15,10 +15,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const orders = [];
 
 
+    const handlerModal = (event) => {
+        const target = event.target;
+        const modal = target.closest('.order-modal');
+        const order = orders[modal.id];
+
+        if (target.closest('.close') || target === modal) {
+            modal.style.display = 'none';
+        }
+
+        if (target.classList.contains('get-order')) {
+            order.active = true;
+            modal.style.display = 'none';
+            renderOrders();
+        }
+
+        if (target.id === 'capitulation') {
+            order.active = false;
+            modal.style.display = 'none';
+            renderOrders();
+        }
+
+        if (target.id === 'ready') {
+            orders.splice(orders.indexOf(order), 1);
+
+            modal.style.display = 'none';
+            renderOrders();
+        }
+    };
+
     const openModal = (order) => {
         const { title, firstName, email, phone, description, amount,
                 currency, deadline, active = false } = order;
         const modal = active ? modalOrderActive : modalOrder;
+        modal.id = orders.indexOf(order);
 
         const titleBlock = modal.querySelector('.modal-title'),
               firstNameBlock = modal.querySelector('.firstName'),
@@ -42,33 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         modal.style.display = 'flex';
 
-        const closeBtn = modal.querySelector('.close');
-        closeBtn ? closeBtn.addEventListener('click', (e) => {
-            modal.style.display = 'none';
-        }) : '';
-
-        const getOrderBtn = modal.querySelector('.get-order');
-        getOrderBtn ? getOrderBtn.addEventListener('click', () => {
-            order.active = true;
-            modal.style.display = 'none';
-            renderOrders();
-        }) : '';
-
-        const capitulationBtn = modal.querySelector('#capitulation');
-        capitulationBtn ? capitulationBtn.addEventListener('click', () => {
-            order.active = false;
-            modal.style.display = 'none';
-            renderOrders();
-        }) : '';
-
-        const readyBtn = modal.querySelector('#ready');
-        readyBtn ? readyBtn.addEventListener('click', () => {
-
-            orders.splice(orders.indexOf(order), 1);
-
-            modal.style.display = 'none';
-            renderOrders();
-        }) : '';
+        modal.addEventListener('click', handlerModal);
     };
 
     const renderOrders = () => {
