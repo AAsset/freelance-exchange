@@ -53,6 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = 'none';
             renderOrders();
         }) : '';
+
+        const capitulationBtn = modal.querySelector('#capitulation');
+        capitulationBtn ? capitulationBtn.addEventListener('click', () => {
+            order.active = false;
+            modal.style.display = 'none';
+            renderOrders();
+        }) : '';
     };
 
     const renderOrders = () => {
