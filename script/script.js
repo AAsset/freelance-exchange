@@ -46,6 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
         closeBtn ? closeBtn.addEventListener('click', (e) => {
             modal.style.display = 'none';
         }) : '';
+
+        const getOrderBtn = modal.querySelector('.get-order');
+        getOrderBtn ? getOrderBtn.addEventListener('click', () => {
+            order.active = true;
+            modal.style.display = 'none';
+            renderOrders();
+        }) : '';
     };
 
     const renderOrders = () => {
