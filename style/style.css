@@ -78,6 +78,14 @@ main {
     color: #fff;
 }
 
+.head-sort {
+    cursor: pointer;
+}
+
+.table .head-sort:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
 /*modal*/
 
 .modal {

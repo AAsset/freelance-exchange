@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btnExit = document.querySelector('#btn-exit'),
           formCustomer = document.querySelector('#form-customer'),
           ordersTable = document.querySelector('#orders'),
+          headTable = document.querySelector('#head-table'),
           modalOrder = document.querySelector('#order_read'),
           modalOrderActive = document.querySelector('#order_active');
 
@@ -114,6 +115,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const sortOrder = (arr, property) => {
+        arr.sort((a, b) => a[property] > b[property] ? 1 : -1);
+    };
+
+    headTable.addEventListener('click', (e) => {
+        const target = e.target;
+
+        if (target.classList.contains('head-sort')) {
+            if (target.id === 'task-sort') {
+                sortOrder(orders, 'title');
+            }
+
+            if (target.id === 'currency-sort') {
+                sortOrder(orders, 'currency');
+            }
+
+            if (target.id === 'deadline-sort') {
+                sortOrder(orders, 'deadline');
+            }
+            toStorage();
+            renderOrders();
+        }
+    });
 
     ordersTable.addEventListener('click', (e) => {
         const target = e.target;
