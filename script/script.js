@@ -122,6 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     customer.addEventListener('click', () => {
         blockChoice.style.display = 'none';
+
+        const today = new Date().toISOString().substring(0, 10);
+        document.querySelector('#deadline').min = today;
+
         blockCustomer.style.display = 'block';
         btnExit.style.display = 'block';
     });
