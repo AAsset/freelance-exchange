@@ -80,11 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.addEventListener('click', handlerModal);
     };
 
+    const declareDays = (number, days) => {
+        const index = (number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? number % 10 : 5];
+        return number + ' ' + days[index];
+    };
+
     const calcDeadline = (deadline) => {
         const oneDay = 24 * 60 * 60 * 1000;
         const deadlineDate = new Date(deadline);
         const currentDate = new Date();
-        return Math.round((deadlineDate - currentDate) / oneDay);
+        return declareDays(Math.floor((deadlineDate - currentDate) / oneDay), ['день', 'дня', 'дней']);
     };
 
     const renderOrders = () => {
